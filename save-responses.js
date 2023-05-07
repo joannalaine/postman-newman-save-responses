@@ -1,6 +1,7 @@
 const newman = require("newman"),
   fs = require("fs"),
-  path = require("path");
+  path = require("path"),
+  prettier = require("prettier");
 
 // Create a folder to store the response files
 const dir = path.join(__dirname, "responses");
@@ -30,7 +31,7 @@ newman
       console.error(error);
     } else {
       // Store the response body for later
-      responseBody = args.response.stream;
+      responseBody = prettier.format(String(args.response.stream), { parser: "json" });
     }
   })
   // After the test step (even if you don't have any tests defined),
